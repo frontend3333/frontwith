@@ -6,3 +6,43 @@ li {
 span {
     padding: 5px;
 }
+:root{
+    display: block;
+    padding-left: 5%;
+    padding-right: 5%;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: #333;
+}
+.container{
+    width: 100%;
+}
+
+.dark-check{
+    width:110px;
+    margin-top:1%;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.title{
+    text-align: center;
+}
+
+.input-todo{
+    display: block;
+    margin: 0 auto 0 auto;
+    border-top:0;
+    border-left:0;
+    border-right:0;
+    width: 75%;
+}
+.todos{
+    width: 80%;
+    display: block;
+    margin: 5% auto 0 auto;
+    padding:5%;
+    border: 2px solid black;
+    border-radius: 5px;
+}
