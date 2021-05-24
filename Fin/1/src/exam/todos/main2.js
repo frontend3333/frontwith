@@ -1,3 +1,4 @@
+const TODOS_LS = "todos";
 let todos = [];
 
 const $input = document.querySelector(".input-todo");
@@ -10,9 +11,7 @@ function render() {
     html += `
     <li id=${todo.id}>
       <label>
-        <input type="checkbox" class="check-box" ${
-          todo.completed ? "checked" : ""
-        }>
+        <input type="checkbox"  ${todo.completed ? "checked" : ""}>
         ${todo.content}
       </label>
       <span class="remove">X</span>
@@ -21,6 +20,11 @@ function render() {
   });
   $todos.innerHTML = html;
   console.log(todos);
+  saveTodos();
+}
+
+function saveTodos() {
+  localStorage.setItem(TODOS_LS, JSON.stringify(todos)); // localStorage에 리스트 저장
 }
 
 const getTodos = function () {
