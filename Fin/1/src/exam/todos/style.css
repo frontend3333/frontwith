@@ -1,3 +1,4 @@
+
 /* 코드 구현 */
 li {
     list-style: none;
@@ -13,17 +14,53 @@ span {
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
     font-weight: 400;
-    color: #333;
+    background: var(--background);
+    color: var(--color);
 }
+
+:root[color-theme='light']  {
+    --background: #fff;
+    --color: #000;
+  }
+  
+:root[color-theme='dark'] {
+    --background: #000;
+    --color: #fff;
+  }
+  
+  
+
+:root[color-theme='light'] .light--hidden {
+    display: none;    
+  }
+
+
+
+
 .container{
     width: 100%;
 }
 
 .dark-check{
-    width:110px;
+    width:120px;
     margin-top:1%;
     border: 2px solid black;
     border-radius: 5px;
+    border-color: var(--color)
+
+
+}
+
+.dark-check .light--hidden {
+    display: none;
+}
+
+:root[color-theme='dark'] .dark-check .dark--hidden{
+    display: none;
+}
+
+:root[color-theme='dark'] .dark-check .light--hidden{
+    display:inline;
 }
 
 .title{
@@ -45,4 +82,6 @@ span {
     padding:5%;
     border: 2px solid black;
     border-radius: 5px;
+    border-color: var(--color)
+
 }
