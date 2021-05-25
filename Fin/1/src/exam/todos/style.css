@@ -48,17 +48,17 @@ span {
 } */
 
 .light .dark-check .dark--hidden{
-    display: inline;
+    display: none;
 }
 .light .dark-check .light--hidden{
-    display: none;
+    display: inline;
 }
 
 .dark .dark-check .dark--hidden{
-    display:none;
+    display: inline;
 }
 .dark .dark-check .light--hidden{
-    display:inline;
+    display: none;
 }
 
 .title{
