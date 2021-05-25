@@ -1,5 +1,6 @@
 const TODOS_LS = "todos";
 let todos = [];
+let load = [];
 
 const $input = document.querySelector(".input-todo");
 const $todos = document.querySelector(".todos");
@@ -18,25 +19,23 @@ function render() {
     </li>
     `;
   });
-  $todos.innerHTML = html;
-  console.log(todos);
-
   saveTodos();
+  $todos.innerHTML = html;
 }
 
 function saveTodos() {
   localStorage.setItem(TODOS_LS, JSON.stringify(todos)); // localStorage에 리스트 저장
 }
 
-const getTodos = function () {
-  // TODO: 서버로부터 데이터를 취득.
-  todos = [
-    { id: 1, content: "HTML", completed: true },
-    { id: 2, content: "CSS", completed: true },
-    { id: 3, content: "Javascript", completed: false },
-  ];
-  render();
-};
+// const getTodos = function () {
+//   // TODO: 서버로부터 데이터를 취득.
+//   todos = [
+//     { id: 1, content: "HTML", completed: true },
+//     { id: 2, content: "CSS", completed: true },
+//     { id: 3, content: "Javascript", completed: false },
+//   ];
+//   render();
+// };
 
 function findMaxId() {
   return Math.max(0, ...todos.map((todo) => todo.id));
@@ -76,17 +75,30 @@ const toggleTodos = function (e) {
   render();
 };
 
-// function loading() {
-//   const msg = "로딩중...";
-//   const loading_text = document.createElement("li");
-//   loading_text.setAttribute("id", msg);
-//   const textNode = document.createTextNode(msg);
-//   loading_text.appendChild(textNode);
-//   todoList.appendChild(loading_text);
-//   setTimeout(() => todoList.removeChild(loading_text), 1000);
-// }
+function loading() {
+  console.log($todos);
+  const msg = "로딩중...";
+  const loading_text = document.createElement("li");
+  loading_text.setAttribute("id", msg);
+  const textNode = document.createTextNode(msg);
+  loading_text.appendChild(textNode);
+  $todos.appendChild(loading_text);
+  setTimeout(() => $todos.removeChild(loading_text), 1000);
+}
 
-window.onload = getTodos;
-$input.onkeydown = addTodos;
-$todos.onclick = removeTodos;
-$todos.onchange = toggleTodos;
+function main() {
+  $input.onkeydown = addTodos;
+  $todos.onclick = removeTodos;
+  $todos.onchange = toggleTodos;
+}
+
+loading();
+window.onload = function () {
+  todos = [
+    { id: 1, content: "HTML", completed: true },
+    { id: 2, content: "CSS", completed: true },
+    { id: 3, content: "Javascript", completed: false },
+  ];
+  setTimeout(render, 1000);
+  setTimeout(main, 1000);
+};
