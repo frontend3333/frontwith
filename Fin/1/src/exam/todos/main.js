@@ -1,6 +1,6 @@
 const TODOS_LS = "todos";
 let todos = [];
-let load = [];
+let load;
 
 const $input = document.querySelector(".input-todo");
 const $todos = document.querySelector(".todos");
@@ -75,16 +75,31 @@ const toggleTodos = function (e) {
   render();
 };
 
+// function loading() {
+//   // console.log($todos);
+//   const msg = "로딩중...";
+//   const loading_text = document.createElement("li");
+//   loading_text.setAttribute("id", msg);
+//   const textNode = document.createTextNode(msg);
+//   loading_text.appendChild(textNode);
+//   $todos.appendChild(loading_text);
+//   setTimeout(() => $todos.removeChild(loading_text), 10000);
+// }
 function loading() {
   console.log($todos);
   const msg = "로딩중...";
-  const loading_text = document.createElement("li");
-  loading_text.setAttribute("id", msg);
-  const textNode = document.createTextNode(msg);
-  loading_text.appendChild(textNode);
-  $todos.appendChild(loading_text);
-  setTimeout(() => $todos.removeChild(loading_text), 1000);
+  var loading_text = document.createElement("li");
+  loading_text.innerText=msg;
+  // loading_text.setAttribute("id", msg);
+  // const textNode = document.createTextNode(msg);
+  // loading_text.appendChild(textNode);
+  var a =document.$todos.appendChild(loading_text);
+  console.log(a);
+  a.appendChild(loading_text);
+  setTimeout(() => $todos.removeChild(loading_text), 10000);
 }
+
+
 
 function main() {
   $input.onkeydown = addTodos;
@@ -92,8 +107,17 @@ function main() {
   $todos.onchange = toggleTodos;
 }
 
-loading();
+// loading();
 window.onload = function () {
+  // console.log($todos);
+  // const msg = "로딩중...";
+  // const loading_text = document.createElement("li");
+  // loading_text.setAttribute("id", msg);
+  // const textNode = document.createTextNode(msg);
+  // loading_text.appendChild(textNode);
+  // $todos.appendChild(loading_text);
+  // setTimeout(() => $todos.removeChild(loading_text), 10000);
+  $todos.innerHTML= "<div>로딩중...</div>";
   todos = [
     { id: 1, content: "HTML", completed: true },
     { id: 2, content: "CSS", completed: true },
@@ -102,3 +126,28 @@ window.onload = function () {
   setTimeout(render, 1000);
   setTimeout(main, 1000);
 };
+// function loading() {
+//   let a;
+//   console.log($todos);
+//   load = "<li>로딩중...</li>";
+//   localStorage.setItem(TODOS_LS, JSON.stringify(load));
+//   $todos.innerHTML = load;
+//   setTimeout(() => $todos.removeChild(loading_text), 10000);
+// }
+
+// function main() {
+//   $input.onkeydown = addTodos;
+//   $todos.onclick = removeTodos;
+//   $todos.onchange = toggleTodos;
+// }
+
+// loading();
+// window.onload = function () {
+//   todos = [
+//     { id: 1, content: "HTML", completed: true },
+//     { id: 2, content: "CSS", completed: true },
+//     { id: 3, content: "Javascript", completed: false }
+//   ];
+//   setTimeout(render, 10000);
+//   setTimeout(main, 10000);
+// };
