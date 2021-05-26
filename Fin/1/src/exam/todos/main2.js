@@ -42,7 +42,7 @@ function findMaxId() {
 }
 
 const addTodos = function (e) {
-  if (e.code === "Enter" && $input.value.trim() !== "") {
+  if(e.keyCode === 13 && $input.value.trim() !== ""){
     todos = [
       ...todos,
       { id: findMaxId() + 1, content: $input.value, completed: false },
@@ -75,19 +75,19 @@ const toggleTodos = function (e) {
   render();
 };
 
-function loading() {
+function loading(){
   console.log($todos);
   const msg = "로딩중...";
   const loading_text = document.createElement("li");
-  loading_text.setAttribute("id", msg);
+  loading_text.setAttribute('id',msg);
   const textNode = document.createTextNode(msg);
   loading_text.appendChild(textNode);
   $todos.appendChild(loading_text);
-  setTimeout(() => $todos.removeChild(loading_text), 1000);
+  setTimeout(() => $todos.removeChild(loading_text),1000);
 }
 
-function main() {
-  $input.onkeypress = addTodos;
+function main(){
+  $input.onkeydown = addTodos;
   $todos.onclick = removeTodos;
   $todos.onchange = toggleTodos;
 }
@@ -102,3 +102,4 @@ window.onload = function () {
   setTimeout(render, 1000);
   setTimeout(main, 1000);
 };
+
