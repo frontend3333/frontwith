@@ -26,7 +26,8 @@ function findMaxId() {
 function addTodos(e) {
   // * keyCode는 Deprecated 되었습니다.
   // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
-  if (e.code === "Enter" && $input.value.trim() !== "") {
+  if ((e.code === "Enter" || e.code === "NumpadEnter") &&
+  $input.value.trim() !== "") {
     todos.push({
       id: findMaxId() + 1,
       content: $input.value,
