@@ -3,43 +3,29 @@
 // 외부 js 파일 사용 시 window.onload 안 됨
 // https://github.com/codesandbox/codesandbox-client/issues/4683
 
+const $form = document.querySelector(".js-form");
 const $input = document.querySelector(".input-todo");
 const $todos = document.querySelector(".todos");
 
-let todos = JSON.parse(localStorage.getItem("todos"));
-if (!todos) {
-  todos = [
-    { id: 1, content: "HTML", completed: true },
-    { id: 2, content: "CSS", completed: true },
-    { id: 3, content: "Javascript", completed: false },
-  ];
-}
+let todos = [
+  { id: 1, content: "HTML", completed: true },
+  { id: 2, content: "CSS", completed: true },
+  { id: 3, content: "Javascript", completed: false },
+];
 
-function saveTodos() {
-  localStorage.setItem("todos", JSON.stringify(todos)); // localStorage에 리스트 저장
-}
+const findMaxId = () => Math.max(0, ...todos.map((todo) => todo.id));
 
-function findMaxId() {
-  return Math.max(0, ...todos.map((todo) => todo.id));
-}
+const addTodos = () => {
+  todos.push({
+    id: findMaxId() + 1,
+    content: $input.value,
+    completed: false,
+  });
+  render();
+  $form.reset();
+};
 
-function addTodos(e) {
-  // * keyCode는 Deprecated 되었습니다.
-  // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
-  if ((e.code === "Enter" || e.code === "NumpadEnter") &&
-  $input.value.trim() !== "") {
-    todos.push({
-      id: findMaxId() + 1,
-      content: $input.value,
-      completed: false,
-    });
-    render();
-    $input.value = "";
-    return false;
-  }
-}
-
-const removeTodos = function (e) {
+const removeTodos = (e) => {
   if (!e.target.classList.contains("remove")) return;
 
   const listId = +e.target.parentNode.id;
@@ -55,7 +41,7 @@ const removeTodos = function (e) {
   render();
 };
 
-const toggleTodos = function (e) {
+const toggleTodos = (e) => {
   const listId = +e.target.parentNode.parentNode.id;
   const idx = todos.findIndex((todo) => todo.id === listId);
   todos[idx].completed = !todos[idx].completed;
@@ -63,8 +49,8 @@ const toggleTodos = function (e) {
   render();
 };
 
-function render() {
-  if ($todos) {
+const render = () => {
+  if ($todos)
     $todos.innerHTML = todos
       .map(
         (todo) =>
@@ -77,13 +63,13 @@ function render() {
     </li>`
       )
       .join("");
-    saveTodos();
-  }
-}
+
+  localStorage.setItem("todos", JSON.stringify(todos)); // localStorage에 리스트 저장
+};
 setTimeout(render, 1000);
 
-if ($input && $todos) {
-  $input.onkeypress = addTodos;
+if ($form && $input && $todos) {
+  $form.onsubmit = addTodos;
   $todos.onclick = removeTodos;
   $todos.onchange = toggleTodos;
 }
