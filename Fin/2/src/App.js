@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import { bookSearch } from "./component/api";
+import Item from "./component/item";
+import "./App.css";
 /**
  * Week Final - 최종 평가 (part. 2)
  * 범위: Week 1 ~ Week 12
@@ -58,7 +60,10 @@ function App() {
   // do something
   let msg;
   const [searchname, setSearchname] = useState("");
-  const [books, setBooks] = useState("");
+  const [books, setBooks] = useState([]);
+  const [query, setQuery] = useState("");
+  const [item, setItem] = useState();
+  const [pageNum, setPageNum] = useState();
 
   const searchContainerStyle = {
     width: "100%",
@@ -68,21 +73,53 @@ function App() {
   };
 
   useEffect(() => {
-    bookSearchHttpHandler(); // 컴포넌트 마운트 후에, 함수를 호출한다.
-  }, []);
+    window.addEventListener('scroll', infiniteScroll);
+    if (query.length > 0) {
+      setPageNum(1);
+      setTimeout(() => bookSearchHttpHandler(searchname, true), 1000); // 컴포넌트 마운트 후에, 함수를 호출한다.
+    }
+  }, [query]);
 
-  const bookSearchHttpHandler = async () => {
+  const bookSearchHttpHandler = async (query, reset) => {
     // paramter 설정
+    
+    setItem(10);
     const params = {
-      query: searchname,
+      query: query,
       sort: "accuracy", // accuracy | recency 정확도 or 최신
-      page: 1, // 페이지번호
-      size: 10 // 한 페이지에 보여 질 문서의 개수
+      page: pageNum, // 페이지번호
+      size: item // 한 페이지에 보여 질 문서의 개수
     };
     const { data } = await bookSearch(params); // api 호출
-    console.log(data); // 결과 호출
+    try {
+      // 결과 호출
+      if (reset) {
+        setBooks(data.documents);
+        if (!(data.documents.length > 0)) {
+          document.getElementById("secondTextID").innerHTML =
+            "검색 결과가 없습니다.";
+        }
+      } else {
+        setBooks(books.concat(data.documents));
+      }
+    } catch (error) {
+      console.log(error);
+      alert("에러발생");
+    }
   };
 
+  const infiniteScroll = () =>{
+    let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+    let scrollTop = Math.max(document.documentElement.scrollTop, document.body.scrollTop);
+    let clientHeight = document.documentElement.clientHeight;
+    if(scrollTop+clientHeight>=scrollHeight){
+      // var i = item+10;
+      setItem(20);
+      var tmp = pageNum+1;
+      setPageNum(tmp);
+    }
+  };
+  
   const loading = () => {
     document.getElementById("secondTextID").innerHTML = "로딩중...";
     setTimeout(function () {
@@ -91,8 +128,9 @@ function App() {
   };
 
   const onClick = () => {
+    setQuery(searchname);
     loading();
-    if (searchname) bookSearchHttpHandler();
+    console.log(books);
   };
 
   const onKeyPress = (e) => {
@@ -114,12 +152,29 @@ function App() {
           type="search"
           onChange={onChange}
           onKeyPress={onKeyPress}
+          value={searchname}
         ></input>
         <button onClick={onClick}>검색</button>
         <br></br>
         <p className="secondText" id="secondTextID">
           검색어를 입력해주세요
         </p>
+        <ul>
+          {books.map((books, index) => (
+            <Item
+              key={index}
+              url={books.url}
+              thumbnail={books.thumbnail}
+              title={books.title}
+              authors={books.authors}
+              publisher={books.publisher}
+              datetime={books.datetime}
+              sale_price={books.sale_price}
+              price={books.price}
+              status={books.status}
+            />
+          ))}
+        </ul>
       </div>
     </div>
   );
