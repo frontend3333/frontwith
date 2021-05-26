@@ -27,16 +27,6 @@ function saveTodos() {
   localStorage.setItem(TODOS_LS, JSON.stringify(todos)); // localStorage에 리스트 저장
 }
 
-// const getTodos = function () {
-//   // TODO: 서버로부터 데이터를 취득.
-//   todos = [
-//     { id: 1, content: "HTML", completed: true },
-//     { id: 2, content: "CSS", completed: true },
-//     { id: 3, content: "Javascript", completed: false },
-//   ];
-//   render();
-// };
-
 function findMaxId() {
   return Math.max(0, ...todos.map((todo) => todo.id));
 }
