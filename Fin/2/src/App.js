@@ -5,7 +5,6 @@ import Item from "./component/item";
 import "./App.css";
 
 /**
-
  * Week Final - 최종 평가 (part. 2)
  * 범위: Week 1 ~ Week 12
  * 총점: 40
