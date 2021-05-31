@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import { bookSearch } from "./component/api";
 import Item from "./component/item";
 import "./App.css";
-
 /**
  * Week Final - 최종 평가 (part. 2)
  * 범위: Week 1 ~ Week 12
