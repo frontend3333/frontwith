@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 const Kakao = axios.create({
   baseURL: "https://dapi.kakao.com", // 공통 요청 경로를 지정해준다.
   headers: {
