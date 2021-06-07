@@ -29,6 +29,7 @@ const Item = (props) => {
               </b>
             ) : (
               <b>
+                
                 <span>\ </span>
                 {props.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </b>
