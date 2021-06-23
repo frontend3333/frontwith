@@ -98,7 +98,6 @@ function App() {
           document.getElementById("secondTextID").innerHTML =
             "검색 결과가 없습니다.";
         }
-        
       } else {
         setBooks(books.concat(data.documents));
       }
